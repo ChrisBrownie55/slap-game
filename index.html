@@ -10,7 +10,38 @@
 </head>
 
 <body>
-
+  <section id="character-select">
+    <h1>Select Your Player:</h1>
+    <button class='ken'>Ken</but>
+  </section>
+  <main class='fight-box'>
+    <h1>Fight:</h1>
+    <div class='ken stand' id="player" />
+    <div class='enemy stand' id="enemy" />
+  </main>
+  <section class="buttons">
+    <h2>Attacks</h2>
+    <article id='attack-buttons'>
+    </article>
+    <h2>Modifiers</h2>
+    <article id='modifier-buttons'>
+    </article>
+  </section>
+  <section class='stats'>
+    <h1>Stats</h1>
+    <article class='stats-list'>
+      <h4>Current Modifier:
+        <span id="modifier"> None</span>
+      </h4>
+      <h4>Health:
+        <span id="enemy-health"> 100</span>
+      </h4>
+    </article>
+  </section>
+  <dialog id='ko'>
+    <img src='assets/ko.png' class='ko-img' />
+  </dialog>
+  <script src='https://unpkg.com/stanager'></script>
   <script src="main.js"></script>
 </body>
 
