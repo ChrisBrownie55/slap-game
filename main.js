@@ -53,7 +53,9 @@ function drawButtons() {
   ].attacks
     .map(
       (attack, index) =>
-        `<button onclick='playerAttack(${index})'>${attack.name}</button>`
+        `<button onclick='playerAttack(event, ${index})'>${
+          attack.name
+        }</button>`
     )
     .join('');
 
@@ -86,14 +88,19 @@ function resetPlayerAnimation() {
     ${characters[activeCharacterIndex].className} stand
   `;
 }
-function playerAttack(attackIndex) {
+function playerAttack(event, attackIndex) {
+  event.target.disabled = true;
+
   const player = characters[activeCharacterIndex];
   const attack = player.attacks[attackIndex];
   playerElement.className = `
     ${player.className} ${attack.className}
   `;
 
-  playerElement.addEventListener('animationend', resetPlayerAnimation);
+  playerElement.addEventListener('animationend', () => {
+    resetPlayerAnimation();
+    event.target.disabled = false;
+  });
 
   let playerDamage = attack.damageValue();
   if (player.activeModifier !== null) {
@@ -121,12 +128,12 @@ function showModal(id, duration) {
   return new Promise((resolve, reject) => {
     const modal = document.getElementById(id);
     if (modal.open) {
-      reject('Modal already open');
+      resolve({ error: 'Modal already open' });
     }
     modal.showModal();
     setTimeout(() => {
       modal.close();
-      resolve();
+      resolve({ error: null });
     }, duration);
   });
 }
