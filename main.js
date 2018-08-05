@@ -20,12 +20,14 @@ const characters = [
     attacks: [
       {
         name: 'Punch',
+        iconSrc: 'assets/fist.png',
         className: 'punch',
         damageValue: () => Math.random() * 10 + 5,
         projectile: false
       },
       {
         name: 'Blast',
+        iconSrc: 'assets/hadouken.png',
         className: 'blast',
         damageValue: () => (Math.random() * 5 + 1) ** 2,
         projectile: true
@@ -52,10 +54,11 @@ function drawButtons() {
     activeCharacterIndex
   ].attacks
     .map(
-      (attack, index) =>
-        `<button onclick='playerAttack(event, ${index})'>${
-          attack.name
-        }</button>`
+      (attack, index) => `
+        <button onclick='playerAttack(event, ${index})'>
+          ${attack.name}
+        </button>
+      `
     )
     .join('');
 
