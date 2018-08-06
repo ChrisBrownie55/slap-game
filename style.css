@@ -110,13 +110,8 @@
   95%,
   100% {
     background-position: 210px -400px;
-  }
-  95% {
-    left: 545px;
-  }
-  to {
-    left: 550px;
     visibility: visible;
+    left: 675px;
   }
 }
 @keyframes ken-walk {
@@ -253,4 +248,23 @@ input[type='radio']:checked {
   opacity: 0;
   z-index: 2;
   pointer-events: none;
+}
+
+#reset {
+  height: 3rem;
+  width: 9rem;
+  border-radius: 4px;
+  border: solid 1px #222;
+  padding: 0;
+  font-size: 1.15rem;
+  background-color: white;
+  margin-left: auto;
+  float: right;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+#reset:hover {
+  background-color: black;
+  color: white;
 }

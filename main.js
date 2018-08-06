@@ -50,6 +50,51 @@ let attacking = false;
 
 const playerElement = document.getElementById('player');
 
+function reset() {
+  characters.splice(0);
+  characters.push({
+    name: 'Ken',
+    className: 'ken',
+    modifiers: [
+      {
+        name: 'Steroids',
+        modFunc: damageValue => damageValue + (damageValue / 4) ** 2
+      },
+      {
+        name: 'Knee Arrow',
+        modFunc: damageValue => damageValue / (Math.random() * 5 + 5)
+      },
+      {
+        name: 'Flu Shot',
+        modFunc: damageValue => damageValue
+      }
+    ],
+    activeModifier: null,
+    attacks: [
+      {
+        name: 'Punch',
+        iconSrc: 'assets/fist.png',
+        className: 'punch',
+        damageValue: () => Math.random() * 10 + 5,
+        projectile: false
+      },
+      {
+        name: 'Blast',
+        iconSrc: 'assets/hadouken.png',
+        className: 'blast',
+        damageValue: () => (Math.random() * 5 + 1) ** 2,
+        projectile: true
+      }
+    ],
+    x: 0
+  });
+  playerElement.style.left = '0px';
+  activeCharacterIndex = 0;
+  enemy.health.value = 100;
+  drawButtons();
+  document.getElementById('modifier').textContent = 'None';
+}
+
 function drawButtons() {
   document.getElementById('attack-buttons').innerHTML = characters[
     activeCharacterIndex
@@ -87,7 +132,6 @@ function drawButtons() {
 
 function draw() {
   resetPlayerAnimation();
-  document.getElementById('modifier');
 }
 
 function resetPlayerAnimation() {
@@ -205,7 +249,8 @@ soundTrack.play();
 
 anime({
   targets: logo,
-  opacity: 1
+  opacity: 1,
+  easing: 'easeOutQuart'
 }).finished.then(() =>
   anime({
     targets: logo,
