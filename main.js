@@ -32,7 +32,8 @@ const characters = [
         damageValue: () => (Math.random() * 5 + 1) ** 2,
         projectile: true
       }
-    ]
+    ],
+    x: 0
   }
 ];
 
@@ -55,8 +56,11 @@ function drawButtons() {
   ].attacks
     .map(
       (attack, index) => `
-        <button onclick='playerAttack(event, ${index})'>
+        <button class='attack-button' onclick='playerAttack(event, ${index})'>
           ${attack.name}
+          <img class='attack-icon' src='${
+            attack.iconSrc
+          }' alt='icon for button' />
         </button>
       `
     )
@@ -100,10 +104,21 @@ function playerAttack(event, attackIndex) {
     ${player.className} ${attack.className}
   `;
 
-  playerElement.addEventListener('animationend', () => {
+  const animationEnd = () => {
     resetPlayerAnimation();
     event.target.disabled = false;
-  });
+    playerElement.removeEventListener('animationend', animationEnd);
+    if (enemy.health.value - playerDamage <= 0) {
+      enemy.health.value = 0;
+      setTimeout(
+        () => showModal('ko', 2500).then(() => (enemy.health.value = 100)),
+        500
+      );
+    } else {
+      enemy.health.value -= playerDamage;
+    }
+  };
+  playerElement.addEventListener('animationend', animationEnd);
 
   let playerDamage = attack.damageValue();
   if (player.activeModifier !== null) {
@@ -112,19 +127,12 @@ function playerAttack(event, attackIndex) {
     );
   }
   playerDamage = Math.floor(playerDamage);
-
-  if (enemy.health.value - playerDamage <= 0) {
-    enemy.health.value = 0;
-    setTimeout(
-      () => showModal('ko', 2500).then(() => (enemy.health.value = 100)),
-      500
-    );
-  } else {
-    enemy.health.value -= playerDamage;
-  }
 }
 function playerModify(modifyIndex) {
-  characters[activeCharacterIndex].activeModifier = modifyIndex;
+  const player = characters[activeCharacterIndex];
+  player.activeModifier = modifyIndex;
+  document.getElementById('modifier').textContent =
+    player.modifiers[modifyIndex].name;
 }
 
 function showModal(id, duration) {
@@ -143,3 +151,65 @@ function showModal(id, duration) {
 
 drawButtons();
 draw();
+
+const arrowKeys = {
+  left: false,
+  right: false
+};
+window.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft') {
+    arrowKeys.left = true;
+  } else if (event.key === 'ArrowRight') {
+    arrowKeys.right = true;
+  }
+  if (arrowKeys.left || arrowKeys.right) {
+    playerElement.className = `
+      ${characters[activeCharacterIndex].className}
+      ${arrowKeys.left ? 'reverse-animation' : ''}
+      walk
+    `;
+  }
+});
+window.addEventListener('keyup', event => {
+  if (event.key === 'ArrowLeft') {
+    arrowKeys.left = false;
+  } else if (event.key === 'ArrowRight') {
+    arrowKeys.right = false;
+  }
+  if (!arrowKeys.left && !arrowKeys.right) {
+    resetPlayerAnimation();
+  }
+});
+const fightBox = document.querySelector('.fight-box');
+setInterval(() => {
+  const player = characters[activeCharacterIndex];
+  let x = player.x;
+  if (arrowKeys.left) {
+    x = x < 5 ? 0 : x - 5;
+    playerElement.style.left = `${x}px`;
+  } else if (arrowKeys.right) {
+    const fightBoxWidth = fightBox.getBoundingClientRect().width;
+    x = x > fightBoxWidth - 75 ? fightBoxWidth - 70 : x + 5;
+  }
+
+  if (player.x !== x) {
+    player.x = x;
+    playerElement.style.left = `${x}px`;
+  }
+}, 1000 / 30);
+
+const soundTrack = document.getElementById('sound-track');
+soundTrack.loop = true;
+soundTrack.volume = 0.5;
+soundTrack.play();
+
+anime({
+  targets: logo,
+  opacity: 1
+}).finished.then(() =>
+  anime({
+    targets: logo,
+    opacity: 0,
+    duration: 5000
+  })
+);

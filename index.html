@@ -14,23 +14,27 @@
     <h1>Select Your Player:</h1>
     <button class='ken'>Ken</but>
   </section> -->
+  <img src='assets/street-fighter-logo.png' id='logo' style='opacity: 0;' />
+  <audio src='assets/sound-track.mp3' id='sound-track'></audio>
   <main class='fight-box'>
-    <div class='ken stand' id="player" />
-    <div class='enemy stand' id="enemy" />
+    <div class='ken walk' id="player">
+    </div>
+    <div class='ken stand' id="enemy">
+    </div>
+    <section class='stats'>
+      <h4>Health:
+        <span id="enemy-health"> 100</span>
+      </h4>
+      <h4>Current Modifier:
+        <span id="modifier"> None</span>
+      </h4>
+    </section>
   </main>
   <section class="buttons">
-    <article id='attack-buttons'>
+    <article class='button-group' id='attack-buttons'>
     </article>
-    <article id='modifier-buttons'>
+    <article class='button-group' id='modifier-buttons'>
     </article>
-  </section>
-  <section class='stats'>
-    <h4>Health:
-      <span id="enemy-health"> 100</span>
-    </h4>
-    <h4>Current Modifier:
-      <span id="modifier"> None</span>
-    </h4>
   </section>
   <dialog id='ko'>
     <img src='assets/ko.png' class='ko-img' />
