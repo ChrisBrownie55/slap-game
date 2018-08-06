@@ -265,7 +265,7 @@ const soundTrack = document.getElementById('sound-track');
 soundTrack.loop = true;
 soundTrack.volume = 0.5;
 
-soundTrack.play().catch(e => {
+soundTrack.play().catch(() => {
   const firstSoundPlay = () =>
     soundTrack.play() && document.removeEventListener('click', firstSoundPlay);
   document.addEventListener('click', firstSoundPlay);
