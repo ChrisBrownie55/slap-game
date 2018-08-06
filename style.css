@@ -268,3 +268,26 @@ input[type='radio']:checked {
   background-color: black;
   color: white;
 }
+
+#enemy-health::after {
+  content: '-' attr(data-damage);
+  position: absolute;
+  top: 100%;
+  right: 1rem;
+  color: red;
+  font-weight: bold;
+  animation: fade-away 2s forwards;
+}
+
+@keyframes fade-away {
+  from {
+    opacity: 0;
+  }
+  25%,
+  50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

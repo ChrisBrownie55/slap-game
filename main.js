@@ -152,6 +152,12 @@ function playerAttack(event, attackIndex) {
     resetPlayerAnimation();
     event.target.disabled = false;
     playerElement.removeEventListener('animationend', animationEnd);
+
+    const enemyHealthElement = document.getElementById('enemy-health');
+    enemyHealthElement.setAttribute('data-damage', playerDamage);
+    const newone = enemyHealthElement.cloneNode(true);
+    enemyHealthElement.parentNode.replaceChild(newone, enemyHealthElement);
+
     if (enemy.health.value - playerDamage <= 0) {
       enemy.health.value = 0;
       setTimeout(
