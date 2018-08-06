@@ -60,6 +60,18 @@
 .reverse-animation {
   animation-direction: reverse;
 }
+.ken.kick {
+  animation: ken-kick steps(4) 0.35s forwards;
+}
+
+@keyframes ken-kick {
+  from {
+    background-position: 0px -480px;
+  }
+  to {
+    background-position: -280px -480px;
+  }
+}
 
 @keyframes ken-stand {
   from {

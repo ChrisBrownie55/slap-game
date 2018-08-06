@@ -31,6 +31,12 @@ const characters = [
         className: 'blast',
         damageValue: () => (Math.random() * 5 + 1) ** 2,
         projectile: true
+      },
+      {
+        name: 'Kick',
+        iconSrc: 'assets/kick.png',
+        className: 'kick',
+        damageValue: () => (Math.random() * 4 + 3) ** 1.9
       }
     ],
     x: 0
