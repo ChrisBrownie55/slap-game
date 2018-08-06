@@ -53,10 +53,13 @@ enemy.health.subscribe(
 
 let activeCharacterIndex = 0;
 let attacking = false;
+let hits = 0;
 
 const playerElement = document.getElementById('player');
 
 function reset() {
+  hits = 0;
+  document.getElementById('hits').textContent = ' 0';
   characters.splice(0);
   characters.push({
     name: 'Ken',
@@ -171,6 +174,8 @@ function playerAttack(event, attackIndex) {
     enemyHealthElement.setAttribute('data-damage', playerDamage);
     const newone = enemyHealthElement.cloneNode(true);
     enemyHealthElement.parentNode.replaceChild(newone, enemyHealthElement);
+
+    document.getElementById('hits').textContent = ` ${++hits}`;
 
     if (enemy.health.value - playerDamage <= 0) {
       anime({
