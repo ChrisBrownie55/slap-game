@@ -93,6 +93,8 @@ function reset() {
   enemy.health.value = 100;
   drawButtons();
   document.getElementById('modifier').textContent = 'None';
+
+  animateLogo();
 }
 
 function drawButtons() {
@@ -271,14 +273,15 @@ soundTrack.play().catch(() => {
   document.addEventListener('click', firstSoundPlay);
 });
 
-anime({
-  targets: logo,
-  opacity: 1,
-  easing: 'easeOutQuart'
-}).finished.then(() =>
+const animateLogo = () =>
   anime({
     targets: logo,
-    opacity: 0,
-    duration: 5000
-  })
-);
+    opacity: 1,
+    easing: 'easeOutQuart'
+  }).finished.then(() =>
+    anime({
+      targets: logo,
+      opacity: 0,
+      duration: 5000
+    })
+  );
