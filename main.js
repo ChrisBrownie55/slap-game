@@ -245,7 +245,14 @@ setInterval(() => {
 const soundTrack = document.getElementById('sound-track');
 soundTrack.loop = true;
 soundTrack.volume = 0.5;
-soundTrack.play();
+
+try {
+  soundTrack.play();
+} catch (e) {
+  const firstSoundPlay = () =>
+    soundTrack.play() && document.removeEventListener('click', firstSoundPlay);
+  document.addEventListener('click', firstSoundPlay);
+}
 
 anime({
   targets: logo,
