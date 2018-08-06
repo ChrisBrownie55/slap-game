@@ -269,7 +269,7 @@ input[type='radio']:checked {
   color: white;
 }
 
-#enemy-health::after {
+#enemy-health:not([data-damage=''])::after {
   content: '-' attr(data-damage);
   position: absolute;
   top: 100%;

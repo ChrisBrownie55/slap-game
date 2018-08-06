@@ -159,13 +159,26 @@ function playerAttack(event, attackIndex) {
     enemyHealthElement.parentNode.replaceChild(newone, enemyHealthElement);
 
     if (enemy.health.value - playerDamage <= 0) {
-      enemy.health.value = 0;
+      anime({
+        targets: enemy.health,
+        value: 0,
+        easing: 'linear',
+        round: 1,
+        duration: enemy.health.value * 25
+      });
       setTimeout(
         () => showModal('ko', 2500).then(() => (enemy.health.value = 100)),
         500
       );
     } else {
-      enemy.health.value -= playerDamage;
+      anime({
+        targets: enemy.health,
+        value: enemy.health.value - playerDamage,
+        easing: 'linear',
+        round: 1,
+        duration: playerDamage * 25
+      });
+      // enemy.health.value -= playerDamage;
     }
   };
   playerElement.addEventListener('animationend', animationEnd);
